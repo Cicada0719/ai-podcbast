@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:just_audio/just_audio.dart';
 import '../models/episode.dart';
@@ -8,11 +9,14 @@ class PlayerService extends ChangeNotifier {
   int _currentIndex = 0;
   bool _isPlaying = false;
   bool _isLoading = false;
+  Timer? _sleepTimer;
+  int? _sleepMinutesLeft;
 
   List<Episode> get episodes => _episodes;
   Episode? get currentEpisode => _episodes.isEmpty ? null : _episodes[_currentIndex];
   bool get isPlaying => _isPlaying;
   bool get isLoading => _isLoading;
+  int? get sleepMinutesLeft => _sleepMinutesLeft;
 
   // 使用本机 IP 供 Android 模拟器访问，若为 Windows/Web 请改回 127.0.0.1
   final String baseUrl = "http://127.0.0.1:8000";
@@ -68,8 +72,32 @@ class PlayerService extends ChangeNotifier {
   void next() => _player.seekToNext();
   void previous() => _player.seekToPrevious();
 
+  void setSleepTimer(int minutes) {
+    _sleepTimer?.cancel();
+    if (minutes <= 0) {
+      _sleepMinutesLeft = null;
+      notifyListeners();
+      return;
+    }
+    _sleepMinutesLeft = minutes;
+    notifyListeners();
+    
+    _sleepTimer = Timer.periodic(const Duration(minutes: 1), (timer) {
+      if (_sleepMinutesLeft != null && _sleepMinutesLeft! > 1) {
+        _sleepMinutesLeft = _sleepMinutesLeft! - 1;
+        notifyListeners();
+      } else {
+        pause();
+        _sleepMinutesLeft = null;
+        timer.cancel();
+        notifyListeners();
+      }
+    });
+  }
+
   @override
   void dispose() {
+    _sleepTimer?.cancel();
     _player.dispose();
     super.dispose();
   }

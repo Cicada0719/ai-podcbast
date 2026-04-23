@@ -27,6 +27,10 @@ class GenerateRequest(BaseModel):
     limit_songs: int = 3
     tts_provider: str = "edge" # 支持: edge, aliyun, volcengine, minimax
     podcast_mode: str = "dual" # "single" (单人) 或 "dual" (双人相声)
+    theme: str = "随机" # 需求 2: 播客主题
+    dj_personality: str = "幽默风趣" # 需求 1: 主播性格
+    target_language: str = "English" # 需求 9: 目标语言
+    user_message: str = "" # 需求 14: 听众留言
 
 @app.get("/")
 async def read_root():
@@ -48,10 +52,14 @@ async def generate_podcast_script(req: GenerateRequest, background_tasks: Backgr
 
     logger.info(f"成功获取 {len(songs)} 首歌曲, 准备生成 LLM 台本...")
     script_data = await llm_client.generate_dj_script(
-        songs_info=songs, 
-        context=req.context, 
+        songs_info=songs,
+        context=req.context,
         target_language_ratio=req.language_ratio,
-        podcast_mode=req.podcast_mode
+        podcast_mode=req.podcast_mode,
+        theme=req.theme,
+        dj_personality=req.dj_personality,
+        target_language=req.target_language,
+        user_message=req.user_message
     )
     
     # 动态实例化对应的 TTS 客户端

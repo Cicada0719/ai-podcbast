@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../services/storage_service.dart';
 import '../models/episode.dart';
 
@@ -36,6 +37,22 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
         title: const Text('Vocabulary Book', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
         backgroundColor: Colors.transparent,
         elevation: 0,
+        actions: [
+          if (!_isLoading && _words.isNotEmpty)
+            IconButton(
+              icon: const Icon(Icons.ios_share, color: Colors.amber),
+              tooltip: 'Export to Clipboard',
+              onPressed: () async {
+                final exportText = _words.map((w) => '${w.word}\nMeaning: ${w.meaning}\nExample: ${w.example}\n').join('\n---\n');
+                await Clipboard.setData(ClipboardData(text: exportText));
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Vocabulary exported to clipboard! (Ready for Anki/Notion)')),
+                  );
+                }
+              },
+            )
+        ],
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator(color: Colors.amber))

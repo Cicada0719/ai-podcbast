@@ -25,6 +25,25 @@ class _PlayerScreenState extends State<PlayerScreen> {
         title: const Text('AI DJ Radio', style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.transparent,
         elevation: 0,
+        actions: [
+          IconButton(
+            icon: Icon(
+              playerService.sleepMinutesLeft != null ? Icons.timer : Icons.timer_off,
+              color: playerService.sleepMinutesLeft != null ? Colors.amber : Colors.white,
+            ),
+            onPressed: () => _showSleepTimerDialog(context, playerService),
+          ),
+          if (playerService.sleepMinutesLeft != null)
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.only(right: 16.0),
+                child: Text(
+                  '${playerService.sleepMinutesLeft}m',
+                  style: const TextStyle(color: Colors.amber, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+        ],
       ),
       body: SafeArea(
         child: playerService.isLoading
@@ -61,6 +80,45 @@ class _PlayerScreenState extends State<PlayerScreen> {
                     ],
                   ),
       ),
+    );
+  }
+
+  void _showSleepTimerDialog(BuildContext context, PlayerService playerService) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: const Color(0xFF1E1E1E),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (context) {
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Text('Sleep Timer', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
+              ),
+              ...[15, 30, 45, 60].map((mins) => ListTile(
+                title: Text('$mins Minutes', style: const TextStyle(color: Colors.white70)),
+                leading: const Icon(Icons.timer, color: Colors.amber),
+                onTap: () {
+                  playerService.setSleepTimer(mins);
+                  Navigator.pop(context);
+                },
+              )),
+              ListTile(
+                title: const Text('Turn Off', style: TextStyle(color: Colors.redAccent)),
+                leading: const Icon(Icons.timer_off, color: Colors.redAccent),
+                onTap: () {
+                  playerService.setSleepTimer(0);
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 
