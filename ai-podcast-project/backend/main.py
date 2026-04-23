@@ -26,6 +26,7 @@ class GenerateRequest(BaseModel):
     language_ratio: str = "50% 中文，50% 英文"
     limit_songs: int = 3
     tts_provider: str = "edge" # 支持: edge, aliyun, volcengine, minimax
+    podcast_mode: str = "dual" # "single" (单人) 或 "dual" (双人相声)
 
 @app.get("/")
 async def read_root():
@@ -49,11 +50,12 @@ async def generate_podcast_script(req: GenerateRequest, background_tasks: Backgr
     script_data = await llm_client.generate_dj_script(
         songs_info=songs, 
         context=req.context, 
-        target_language_ratio=req.language_ratio
+        target_language_ratio=req.language_ratio,
+        podcast_mode=req.podcast_mode
     )
     
     # 动态实例化对应的 TTS 客户端
-    tts_client = TTSEngine(provider=req.tts_provider, voice="zh-CN-XiaoxiaoNeural")
+    tts_client = TTSEngine(provider=req.tts_provider)
     
     # 获取台本后，开始并行或串行生成 TTS 语音
     # 为避免接口等待过长，实际生产中可将 TTS 放入后台任务或使用 WebSocket 推送

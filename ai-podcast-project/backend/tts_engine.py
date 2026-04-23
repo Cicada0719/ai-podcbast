@@ -30,7 +30,7 @@ class TTSEngine:
             logger.info(f"开始使用 [{self.provider}] 生成 TTS 音频: {text[:20]}...")
             
             if self.provider == "edge":
-                await self._generate_edge(text, output_path)
+                await self._generate_edge(text, output_path, speaker_name)
             elif self.provider == "minimax":
                 await self._generate_minimax(text, output_path)
             elif self.provider == "aliyun":
@@ -39,7 +39,7 @@ class TTSEngine:
                 await self._generate_volcengine(text, output_path)
             else:
                 logger.error(f"不支持的 TTS provider: {self.provider}，回退至 edge")
-                await self._generate_edge(text, output_path)
+                await self._generate_edge(text, output_path, speaker_name)
 
             logger.info(f"音频保存成功: {output_path}")
             return f"/static/audio/{filename}"
@@ -48,8 +48,11 @@ class TTSEngine:
             logger.error(f"TTS 生成失败: {e}")
             return ""
 
-    async def _generate_edge(self, text: str, output_path: str):
-        communicate = edge_tts.Communicate(text, self.voice)
+    async def _generate_edge(self, text: str, output_path: str, speaker_name: str):
+        # 动态分配音色
+        voice_to_use = "en-US-AriaNeural" if speaker_name == "Echo" else "zh-CN-YunxiNeural"
+        
+        communicate = edge_tts.Communicate(text, voice_to_use)
         await communicate.save(output_path)
 
     async def _generate_minimax(self, text: str, output_path: str):

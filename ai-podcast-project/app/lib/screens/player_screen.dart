@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../services/player_service.dart';
+import '../services/storage_service.dart';
 import '../models/episode.dart';
 
-class PlayerScreen extends StatelessWidget {
+class PlayerScreen extends StatefulWidget {
   const PlayerScreen({super.key});
+
+  @override
+  State<PlayerScreen> createState() => _PlayerScreenState();
+}
+
+class _PlayerScreenState extends State<PlayerScreen> {
+  final StorageService _storageService = StorageService();
 
   @override
   Widget build(BuildContext context) {
@@ -58,20 +66,25 @@ class PlayerScreen extends StatelessWidget {
 
   Widget _buildInfoCard(Episode ep) {
     bool isDj = ep.type == 'dj_talk';
+    // 双人播客场景下动态切换头像颜色
+    Color themeColor = isDj 
+        ? (ep.speaker == 'Leo' ? Colors.greenAccent : Colors.amber) 
+        : Colors.blue;
+
     return Container(
       decoration: BoxDecoration(
-        color: isDj ? Colors.amber.withOpacity(0.1) : Colors.blue.withOpacity(0.1),
+        color: themeColor.withOpacity(0.1),
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: isDj ? Colors.amber : Colors.blue, width: 2),
+        border: Border.all(color: themeColor, width: 2),
       ),
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
-              isDj ? Icons.mic_external_on : Icons.music_note,
+              isDj ? (ep.speaker == 'Leo' ? Icons.face : Icons.mic_external_on) : Icons.music_note,
               size: 80,
-              color: isDj ? Colors.amber : Colors.blue,
+              color: themeColor,
             ),
             const SizedBox(height: 24),
             Text(
@@ -147,6 +160,19 @@ class PlayerScreen extends StatelessWidget {
                       w.meaning,
                       style: const TextStyle(color: Colors.white70, fontSize: 14),
                     ),
+                    IconButton(
+                      icon: const Icon(Icons.bookmark_add, color: Colors.amberAccent),
+                      onPressed: () async {
+                        await _storageService.saveWord(w);
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('已保存单词: ${w.word}')),
+                          );
+                        }
+                      },
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(),
+                    )
                   ],
                 ),
                 const SizedBox(height: 8),
