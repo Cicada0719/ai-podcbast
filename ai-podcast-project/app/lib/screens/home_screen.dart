@@ -72,73 +72,101 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 32),
             
-            const Text("DJ 个性化设置", style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 16),
+            const Text("🎵 个性化 DJ 设置", style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 20),
             
-            // 目标语言和比例
-            Row(
-              children: [
-                Expanded(
-                  child: _buildDropdown("学习语言", _targetLanguage, _languages, (val) {
-                    if (val != null) setState(() => _targetLanguage = val);
-                  }),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            
-            Text("外语比例: ${(_enRatio * 100).toInt()}%", style: const TextStyle(color: Colors.white70)),
-            Slider(
-              value: _enRatio,
-              min: 0.0,
-              max: 1.0,
-              divisions: 10,
-              activeColor: Colors.amber,
-              onChanged: (val) {
-                setState(() => _enRatio = val);
-              },
-            ),
-            const SizedBox(height: 16),
+            Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.03),
+                borderRadius: BorderRadius.circular(24),
+                border: Border.all(color: Colors.white.withOpacity(0.05)),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // 目标语言和比例
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _buildDropdown("学习语言", _targetLanguage, _languages, (val) {
+                          if (val != null) setState(() => _targetLanguage = val);
+                        }),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 24),
+                  
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text("外语浓度", style: TextStyle(color: Colors.white70, fontSize: 13, fontWeight: FontWeight.w500)),
+                      Text("${(_enRatio * 100).toInt()}%", style: const TextStyle(color: Colors.amberAccent, fontWeight: FontWeight.bold)),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  SliderTheme(
+                    data: SliderTheme.of(context).copyWith(
+                      activeTrackColor: Colors.amber,
+                      inactiveTrackColor: Colors.white12,
+                      thumbColor: Colors.amberAccent,
+                      overlayColor: Colors.amber.withOpacity(0.2),
+                      trackHeight: 6.0,
+                    ),
+                    child: Slider(
+                      value: _enRatio,
+                      min: 0.0,
+                      max: 1.0,
+                      divisions: 10,
+                      onChanged: (val) {
+                        setState(() => _enRatio = val);
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 24),
 
-            // 主播性格与主题
-            Row(
-              children: [
-                Expanded(
-                  child: _buildDropdown("主播性格", _selectedPersonality, _personalities, (val) {
-                    if (val != null) setState(() => _selectedPersonality = val);
-                  }),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: _buildDropdown("播客主题", _selectedTheme, _themes, (val) {
-                    if (val != null) setState(() => _selectedTheme = val);
-                  }),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
+                  // 主播性格与主题
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _buildDropdown("主播性格", _selectedPersonality, _personalities, (val) {
+                          if (val != null) setState(() => _selectedPersonality = val);
+                        }),
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: _buildDropdown("播客主题", _selectedTheme, _themes, (val) {
+                          if (val != null) setState(() => _selectedTheme = val);
+                        }),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 24),
 
-            // 数据源与环境音
-            Row(
-              children: [
-                Expanded(
-                  child: _buildDropdown("数据源 (歌单)", _selectedDataSource, _dataSources, (val) {
-                    if (val != null) setState(() => _selectedDataSource = val);
-                  }),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: _buildDropdown("背景环境音", _selectedAmbient, _ambientSounds, (val) {
-                    if (val != null) setState(() => _selectedAmbient = val);
-                  }),
-                ),
-              ],
+                  // 数据源与环境音
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _buildDropdown("音乐数据源", _selectedDataSource, _dataSources, (val) {
+                          if (val != null) setState(() => _selectedDataSource = val);
+                        }),
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: _buildDropdown("背景白噪音", _selectedAmbient, _ambientSounds, (val) {
+                          if (val != null) setState(() => _selectedAmbient = val);
+                        }),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 32),
 
             // 听众留言 (Call-in)
-            const Text("给 DJ 留言 (点歌/互动)", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 8),
+            const Text("💬 给 DJ 留言 (点歌/互动)", style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 16),
             TextField(
               controller: _msgController,
               style: const TextStyle(color: Colors.white),
@@ -233,20 +261,22 @@ class _HomeScreenState extends State<HomeScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: const TextStyle(color: Colors.white54, fontSize: 12)),
-        const SizedBox(height: 4),
+        Text(label, style: const TextStyle(color: Colors.white70, fontSize: 13, fontWeight: FontWeight.w500)),
+        const SizedBox(height: 6),
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 2),
           decoration: BoxDecoration(
-            color: Colors.white10,
-            borderRadius: BorderRadius.circular(12),
+            color: Colors.white.withOpacity(0.05),
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: Colors.white12),
           ),
           child: DropdownButtonHideUnderline(
             child: DropdownButton<String>(
               value: value,
               isExpanded: true,
               dropdownColor: const Color(0xFF2C2C2C),
-              style: const TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w500),
+              icon: const Icon(Icons.keyboard_arrow_down, color: Colors.amberAccent),
               items: items.map((String item) {
                 return DropdownMenuItem<String>(
                   value: item,

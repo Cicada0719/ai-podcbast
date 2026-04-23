@@ -20,11 +20,22 @@ class _PlayerScreenState extends State<PlayerScreen> {
     final currentEp = playerService.currentEpisode;
 
     return Scaffold(
-      backgroundColor: Colors.black87,
+      backgroundColor: const Color(0xFF0F0F13), // 更深的沉浸式黑
       appBar: AppBar(
-        title: const Text('AI DJ Radio', style: TextStyle(color: Colors.white)),
+        title: Column(
+          children: [
+            const Text('PLAYING FROM RADIO', style: TextStyle(color: Colors.white54, fontSize: 10, letterSpacing: 2)),
+            const SizedBox(height: 2),
+            Text(currentEp?.type == 'dj_talk' ? 'AI DJ Podcast' : 'Music', style: const TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold)),
+          ],
+        ),
+        centerTitle: true,
         backgroundColor: Colors.transparent,
         elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.keyboard_arrow_down, color: Colors.white),
+          onPressed: () => Navigator.pop(context),
+        ),
         actions: [
           IconButton(
             icon: Icon(
@@ -209,26 +220,40 @@ class _PlayerScreenState extends State<PlayerScreen> {
 
     return Container(
       decoration: BoxDecoration(
-        color: themeColor.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: themeColor, width: 2),
+        color: themeColor.withOpacity(0.05),
+        borderRadius: BorderRadius.circular(32),
+        boxShadow: [
+          BoxShadow(
+            color: themeColor.withOpacity(0.1),
+            blurRadius: 40,
+            spreadRadius: 10,
+          )
+        ],
+        border: Border.all(color: themeColor.withOpacity(0.2), width: 1),
       ),
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              isDj ? (ep.speaker == 'Leo' ? Icons.face : Icons.mic_external_on) : Icons.music_note,
-              size: 80,
-              color: themeColor,
+            Container(
+              padding: const EdgeInsets.all(32),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: themeColor.withOpacity(0.1),
+              ),
+              child: Icon(
+                isDj ? (ep.speaker == 'Leo' ? Icons.face : Icons.mic_external_on) : Icons.music_note,
+                size: 80,
+                color: themeColor,
+              ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 32),
             Text(
-              isDj ? 'AI DJ: ${ep.speaker ?? 'Echo'}' : (ep.songName ?? 'Unknown Song'),
+              isDj ? 'DJ ${ep.speaker ?? 'Echo'}' : (ep.songName ?? 'Unknown Song'),
               style: const TextStyle(
                 color: Colors.white,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
+                fontSize: 28,
+                fontWeight: FontWeight.w800,
               ),
               textAlign: TextAlign.center,
             ),
@@ -236,7 +261,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
               const SizedBox(height: 8),
               Text(
                 ep.artist!,
-                style: const TextStyle(color: Colors.white70, fontSize: 18),
+                style: const TextStyle(color: Colors.white54, fontSize: 18, fontWeight: FontWeight.w500),
               ),
             ]
           ],
