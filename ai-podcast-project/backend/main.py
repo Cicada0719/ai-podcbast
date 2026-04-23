@@ -31,6 +31,7 @@ class GenerateRequest(BaseModel):
     dj_personality: str = "幽默风趣" # 需求 1: 主播性格
     target_language: str = "English" # 需求 9: 目标语言
     user_message: str = "" # 需求 14: 听众留言
+    data_source: str = "网易云" # 需求 3: 导入第三方红心歌单
 
 @app.get("/")
 async def read_root():
@@ -44,8 +45,15 @@ async def generate_podcast_script(req: GenerateRequest, background_tasks: Backgr
     2. 将歌曲信息喂给 LLM 生成台本
     3. 调用 TTS 生成音频
     """
-    logger.info("1. 正在获取网易云每日推荐歌曲...")
-    songs = await netease_client.get_daily_recommend_songs(limit=req.limit_songs)
+    logger.info(f"1. 正在获取 [{req.data_source}] 推荐歌曲...")
+    if req.data_source == "Spotify (Mock)":
+        # 需求 3: 模拟从 Spotify 获取红心歌单
+        songs = [
+            {"id": 1001, "name": "Shape of You", "artist": "Ed Sheeran"},
+            {"id": 1002, "name": "Blinding Lights", "artist": "Ed Sheeran"}
+        ][:req.limit_songs]
+    else:
+        songs = await netease_client.get_daily_recommend_songs(limit=req.limit_songs)
     
     if not songs:
         return {"status": "error", "message": "无法获取网易云歌曲"}

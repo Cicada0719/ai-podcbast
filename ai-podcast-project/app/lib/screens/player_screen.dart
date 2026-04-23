@@ -43,6 +43,12 @@ class _PlayerScreenState extends State<PlayerScreen> {
                 ),
               ),
             ),
+          // 需求 15: 播客切片分享
+          IconButton(
+            icon: const Icon(Icons.ios_share, color: Colors.white),
+            tooltip: 'Share Podcast Slice',
+            onPressed: () => _showSharePosterDialog(context, currentEp),
+          ),
         ],
       ),
       body: SafeArea(
@@ -59,6 +65,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                     children: [
                       // 动态封面或信息区
                       Expanded(
+                        flex: 1,
                         child: Padding(
                           padding: const EdgeInsets.all(24.0),
                           child: _buildInfoCard(currentEp),
@@ -122,6 +129,77 @@ class _PlayerScreenState extends State<PlayerScreen> {
     );
   }
 
+  // 需求 15: 播客切片分享海报生成预览
+  void _showSharePosterDialog(BuildContext context, Episode ep) {
+    showDialog(
+      context: context,
+      builder: (ctx) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          insetPadding: const EdgeInsets.all(24),
+          child: Container(
+            padding: const EdgeInsets.all(24),
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [Color(0xFF2C3E50), Color(0xFF000000)],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              borderRadius: BorderRadius.circular(24),
+              border: Border.all(color: Colors.amberAccent.withOpacity(0.5), width: 2),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(Icons.format_quote, size: 60, color: Colors.amberAccent),
+                const SizedBox(height: 16),
+                Text(
+                  ep.type == 'dj_talk' 
+                      ? (ep.content != null && ep.content!.length > 100 ? ep.content!.substring(0, 100) + "..." : ep.content ?? "Enjoy the music!") 
+                      : "Now Playing: ${ep.songName ?? 'Unknown Song'}",
+                  style: const TextStyle(color: Colors.white, fontSize: 20, height: 1.5, fontStyle: FontStyle.italic),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 32),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.radio, color: Colors.white54, size: 20),
+                    const SizedBox(width: 8),
+                    Text(
+                      ep.type == 'dj_talk' ? 'AI DJ ${ep.speaker ?? "Echo"}' : (ep.artist ?? 'Unknown Artist'),
+                      style: const TextStyle(color: Colors.white54, fontSize: 16),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 40),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton.icon(
+                    icon: const Icon(Icons.share),
+                    label: const Text('Share to Instagram / WeChat'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.amber,
+                      foregroundColor: Colors.black87,
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                    ),
+                    onPressed: () {
+                      Navigator.pop(ctx);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Share Intent Triggered (Mock)')),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   Widget _buildInfoCard(Episode ep) {
     bool isDj = ep.type == 'dj_talk';
     // 双人播客场景下动态切换头像颜色
@@ -168,16 +246,30 @@ class _PlayerScreenState extends State<PlayerScreen> {
   }
 
   Widget _buildSubtitles(String content) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
-      child: Text(
-        content,
-        style: const TextStyle(
-          color: Colors.white70,
-          fontSize: 16,
-          height: 1.5,
+    return Expanded(
+      flex: 2,
+      child: ShaderMask(
+        shaderCallback: (Rect bounds) {
+          return const LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Colors.transparent, Colors.white, Colors.white, Colors.transparent],
+            stops: [0.0, 0.1, 0.9, 1.0],
+          ).createShader(bounds);
+        },
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 24.0),
+          child: Text(
+            content,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 22,
+              height: 1.8,
+              fontWeight: FontWeight.w500,
+            ),
+            textAlign: TextAlign.center,
+          ),
         ),
-        textAlign: TextAlign.center,
       ),
     );
   }

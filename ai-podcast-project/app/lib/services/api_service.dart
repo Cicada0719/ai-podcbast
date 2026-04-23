@@ -13,11 +13,12 @@ class ApiService {
       String djPersonality = "幽默风趣",
       String targetLanguage = "English",
       String userMessage = "",
+      String dataSource = "网易云",
   }) async {
     try {
       final response = await http.post(
         Uri.parse('$baseUrl/generate_script'),
-        headers: {"Content-Type": "application/json"},
+        headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           "context": context,
           "language_ratio": languageRatio,
@@ -25,6 +26,7 @@ class ApiService {
           "dj_personality": djPersonality,
           "target_language": targetLanguage,
           "user_message": userMessage,
+          "data_source": dataSource,
           "limit_songs": 3,
           "tts_provider": "edge" // 在这里可以切换 "minimax", "aliyun", "volcengine"
         }),

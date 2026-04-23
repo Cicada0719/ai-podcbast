@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:just_audio_background/just_audio_background.dart';
 import 'screens/main_screen.dart';
 import 'services/api_service.dart';
 import 'services/player_service.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  // 需求 11: 车载模式 (CarPlay / Android Auto) 与后台锁屏控制
+  await JustAudioBackground.init(
+    androidNotificationChannelId: 'com.ryanheise.bg_demo.channel.audio',
+    androidNotificationChannelName: 'AI DJ Radio Playback',
+    androidNotificationOngoing: true,
+  );
+
   runApp(
     MultiProvider(
       providers: [

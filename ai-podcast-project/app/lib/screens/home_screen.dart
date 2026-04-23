@@ -16,11 +16,15 @@ class _HomeScreenState extends State<HomeScreen> {
   String _selectedTheme = "随机";
   String _selectedPersonality = "幽默风趣";
   String _targetLanguage = "English";
+  String _selectedDataSource = "网易云";
+  String _selectedAmbient = "无";
   final TextEditingController _msgController = TextEditingController();
 
   final List<String> _themes = ["随机", "科技新闻", "情感树洞", "历史冷知识", "每日通勤"];
   final List<String> _personalities = ["幽默风趣", "知性优雅", "二次元傲娇", "严肃专业"];
   final List<String> _languages = ["English", "日本語", "Français", "Español"];
+  final List<String> _dataSources = ["网易云", "Spotify (Mock)"];
+  final List<String> _ambientSounds = ["无", "下雨天", "咖啡馆", "Lo-Fi"];
 
   @override
   void dispose() {
@@ -112,6 +116,24 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
+            const SizedBox(height: 16),
+
+            // 数据源与环境音
+            Row(
+              children: [
+                Expanded(
+                  child: _buildDropdown("数据源 (歌单)", _selectedDataSource, _dataSources, (val) {
+                    if (val != null) setState(() => _selectedDataSource = val);
+                  }),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: _buildDropdown("背景环境音", _selectedAmbient, _ambientSounds, (val) {
+                    if (val != null) setState(() => _selectedAmbient = val);
+                  }),
+                ),
+              ],
+            ),
             const SizedBox(height: 24),
 
             // 听众留言 (Call-in)
@@ -174,8 +196,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       djPersonality: _selectedPersonality,
                       targetLanguage: _targetLanguage,
                       userMessage: _msgController.text,
+                      dataSource: _selectedDataSource,
                     );
 
+                    await playerService.setAmbientSound(_selectedAmbient);
                     await playerService.loadEpisodes(episodes);
 
                     if (context.mounted) Navigator.pop(context);
