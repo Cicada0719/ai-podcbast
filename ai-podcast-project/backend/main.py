@@ -20,12 +20,12 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 # 实例化服务引擎
 netease_client = NeteaseAPI(base_url="http://localhost:3000")
 llm_client = LLMEngine()
-tts_client = TTSEngine(voice="zh-CN-XiaoxiaoNeural")
 
 class GenerateRequest(BaseModel):
     context: str = "早间通勤"
-    language_ratio: str = "70% 中文，30% 英文"
+    language_ratio: str = "50% 中文，50% 英文"
     limit_songs: int = 3
+    tts_provider: str = "edge" # 支持: edge, aliyun, volcengine, minimax
 
 @app.get("/")
 async def read_root():
@@ -51,6 +51,9 @@ async def generate_podcast_script(req: GenerateRequest, background_tasks: Backgr
         context=req.context, 
         target_language_ratio=req.language_ratio
     )
+    
+    # 动态实例化对应的 TTS 客户端
+    tts_client = TTSEngine(provider=req.tts_provider, voice="zh-CN-XiaoxiaoNeural")
     
     # 获取台本后，开始并行或串行生成 TTS 语音
     # 为避免接口等待过长，实际生产中可将 TTS 放入后台任务或使用 WebSocket 推送

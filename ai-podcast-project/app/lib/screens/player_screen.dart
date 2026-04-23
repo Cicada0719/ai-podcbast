@@ -38,6 +38,10 @@ class PlayerScreen extends StatelessWidget {
                         ),
                       ),
                       
+                      // DJ 播放时的中英文字幕
+                      if (currentEp.type == 'dj_talk' && currentEp.content != null)
+                        _buildSubtitles(currentEp.content!),
+                      
                       // 学习卡片区 (如果是 DJ_Talk)
                       if (currentEp.type == 'dj_talk' &&
                           currentEp.learningWords != null &&
@@ -88,6 +92,21 @@ class PlayerScreen extends StatelessWidget {
             ]
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildSubtitles(String content) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
+      child: Text(
+        content,
+        style: const TextStyle(
+          color: Colors.white70,
+          fontSize: 16,
+          height: 1.5,
+        ),
+        textAlign: TextAlign.center,
       ),
     );
   }

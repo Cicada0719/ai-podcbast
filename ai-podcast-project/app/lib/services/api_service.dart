@@ -13,8 +13,9 @@ class ApiService {
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({
           "context": context,
-          "language_ratio": "70% 中文，30% 英文",
-          "limit_songs": 3
+          "language_ratio": "50% 中文，50% 英文",
+          "limit_songs": 3,
+          "tts_provider": "edge" // 在这里可以切换 "minimax", "aliyun", "volcengine"
         }),
       );
 
