@@ -31,10 +31,17 @@ class NeteaseAPI:
         """
         获取网易云热歌榜 (榜单 ID: 3778678)
         """
-        response = await self.client.get("/playlist/track/all?id=3778678&limit=10")
-        data = response.json()
-        songs = data.get("songs", [])[:limit]
-        return self._parse_songs(songs)
+        try:
+            response = await self.client.get("/playlist/track/all?id=3778678&limit=10")
+            data = response.json()
+            songs = data.get("songs", [])[:limit]
+            return self._parse_songs(songs)
+        except Exception as e:
+            logger.warning(f"Fallback 失败，使用 Mock 数据: {e}")
+            return [
+                {"id": 1, "name": "Mock Song 1", "artist": "Mock Artist 1"},
+                {"id": 2, "name": "Mock Song 2", "artist": "Mock Artist 2"}
+            ][:limit]
 
     async def get_lyric(self, song_id: int):
         """

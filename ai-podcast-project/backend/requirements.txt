@@ -1,6 +1,6 @@
-fastapi==0.109.2
-uvicorn==0.27.1
-openai==1.12.0
-edge-tts==6.1.9
-httpx==0.26.0
-pydantic==2.6.1
+fastapi
+uvicorn
+openai
+edge-tts
+httpx
+pydantic
