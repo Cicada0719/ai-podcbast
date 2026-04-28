@@ -1,0 +1,23 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#F9FCFF"/><stop offset="1" stop-color="#E8F2FF"/></linearGradient>
+    <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#5B8CFF"/><stop offset="1" stop-color="#35D6B8"/></linearGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="12" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="1024" height="1024" rx="236" fill="url(#bg)"/>
+  <path d="M118 224c116-130 370-158 560-48 194 112 257 342 150 535-108 195-347 253-538 151C106 763 0 562 54 374c15-54 35-104 64-150Z" fill="#fff" opacity=".58"/>
+  <g fill="none" stroke="#5B8CFF" stroke-opacity=".22" stroke-width="12"><path d="M90 280 910 120"/><path d="M30 700 962 430"/><path d="M188 962 970 650"/></g>
+  <g filter="url(#glow)">
+    <circle cx="512" cy="214" r="174" fill="none" stroke="#5B8CFF" stroke-width="16" stroke-opacity=".42"/>
+    <circle cx="512" cy="214" r="118" fill="none" stroke="#35D6B8" stroke-width="10" stroke-dasharray="28 18" stroke-opacity=".62"/>
+    <path d="M512 42v344M340 214h344M391 93l242 242M633 93 391 335" stroke="#35D6B8" stroke-width="8" stroke-linecap="round" stroke-opacity=".5"/>
+  </g>
+  <rect x="170" y="296" width="684" height="452" rx="76" fill="#fff" opacity=".96"/>
+  <rect x="170" y="296" width="684" height="452" rx="76" fill="none" stroke="#BCD4FF" stroke-width="14"/>
+  <rect x="252" y="400" width="248" height="58" rx="29" fill="#5B8CFF"/>
+  <rect x="252" y="502" width="474" height="48" rx="24" fill="#1D2636" opacity=".86"/>
+  <rect x="252" y="604" width="542" height="48" rx="24" fill="#61708A" opacity=".58"/>
+  <path d="M746 384 804 502l118 58-118 58-58 118-58-118-118-58 118-58Z" fill="#35D6B8" filter="url(#glow)"/>
+  <path d="M204 140 244 224l84 40-84 40-40 84-40-84-84-40 84-40Z" fill="#E8B85C" opacity=".95"/>
+  <circle cx="512" cy="530" r="300" fill="#5B8CFF" opacity=".08"/>
+</svg>

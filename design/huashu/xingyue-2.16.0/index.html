@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>星月英语 2.16.0 · 月白全息学习舱</title>
+  <style>
+    :root {
+      --paper: #f7f9ff;
+      --ice: #eef4ff;
+      --panel: rgba(255, 255, 255, .78);
+      --line: #bcd4ff;
+      --blue: #5b8cff;
+      --cyan: #35d6b8;
+      --gold: #e8b85c;
+      --ink: #1d2636;
+      --soft: #61708a;
+      --shadow: 0 24px 70px rgba(55, 92, 155, .22);
+      font-family: Inter, "Source Han Sans SC", "Microsoft YaHei", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 18% 12%, rgba(91, 140, 255, .24), transparent 28%),
+        radial-gradient(circle at 78% 18%, rgba(53, 214, 184, .20), transparent 25%),
+        linear-gradient(135deg, #ffffff, var(--paper) 42%, #eaf2ff);
+      overflow-x: hidden;
+    }
+    .stage {
+      width: min(1320px, 100%);
+      margin: 0 auto;
+      padding: 34px 28px 54px;
+    }
+    .header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      margin-bottom: 28px;
+    }
+    .eyebrow {
+      color: var(--blue);
+      font: 800 13px/1.2 "Fira Code", ui-monospace, monospace;
+      letter-spacing: .18em;
+    }
+    h1 {
+      margin: 8px 0 10px;
+      font: 900 54px/1 "Exo 2", "Rajdhani", sans-serif;
+      letter-spacing: -.02em;
+    }
+    .brief { max-width: 720px; color: var(--soft); font-size: 18px; line-height: 1.7; }
+    .badge {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 10px 16px;
+      background: rgba(255,255,255,.62);
+      box-shadow: var(--shadow);
+      font: 800 13px/1 "Fira Code", ui-monospace, monospace;
+      color: var(--blue);
+    }
+    .phones {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(300px, 1fr));
+      gap: 26px;
+      align-items: start;
+    }
+    .phone {
+      position: relative;
+      height: 760px;
+      border-radius: 42px;
+      padding: 18px;
+      background: linear-gradient(160deg, rgba(255,255,255,.92), rgba(232,241,255,.78));
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(188, 212, 255, .95);
+      overflow: hidden;
+    }
+    .phone::before {
+      content: "";
+      position: absolute;
+      inset: 12px;
+      border-radius: 32px;
+      border: 1px solid rgba(91,140,255,.18);
+      pointer-events: none;
+    }
+    .screen {
+      position: relative;
+      height: 100%;
+      border-radius: 30px;
+      padding: 24px 18px 88px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 82% 6%, rgba(91,140,255,.18), transparent 28%),
+        radial-gradient(circle at 16% 30%, rgba(53,214,184,.13), transparent 24%),
+        var(--paper);
+    }
+    .gridline {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(120deg, transparent 0 88%, rgba(91,140,255,.12) 89%, transparent 91%),
+        linear-gradient(160deg, transparent 0 92%, rgba(53,214,184,.10) 93%, transparent 95%);
+      background-size: 120px 120px, 190px 190px;
+      animation: drift 18s linear infinite;
+      pointer-events: none;
+    }
+    @keyframes drift { to { transform: translate3d(-60px, 40px, 0); } }
+    .topline { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; }
+    .time { font: 800 13px/1 "Fira Code", ui-monospace, monospace; color: var(--soft); }
+    .title { font: 900 34px/1.06 "Exo 2", "Rajdhani", sans-serif; margin: 10px 0 4px; }
+    .subtitle { color: var(--soft); line-height: 1.5; }
+    .hero {
+      position: relative;
+      height: 212px;
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      margin: 18px 0;
+      overflow: hidden;
+      background: rgba(255,255,255,.68);
+    }
+    .magic {
+      position:absolute;
+      width: 152px;
+      height: 152px;
+      right: 10px;
+      top: 12px;
+      border-radius:50%;
+      border:1px solid rgba(91,140,255,.32);
+      animation: spin 12s linear infinite;
+    }
+    .magic::before,.magic::after {
+      content:"";
+      position:absolute;
+      inset:18px;
+      border-radius:50%;
+      border:1px dashed rgba(53,214,184,.48);
+    }
+    .magic::after { inset:42px; border-color: rgba(232,184,92,.5); transform: rotate(24deg); }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .mascot {
+      position:absolute;
+      right: -12px;
+      bottom: -6px;
+      width: 190px;
+      height: 214px;
+    }
+    .import {
+      position:absolute;
+      left: 18px;
+      bottom: 18px;
+      width: 56%;
+    }
+    .cta {
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      height:54px;
+      border-radius:18px;
+      background: linear-gradient(135deg, var(--blue), #78a6ff);
+      color:white;
+      font-weight:900;
+      box-shadow: 0 14px 30px rgba(91,140,255,.26);
+    }
+    .row { display:flex; gap:10px; margin-top:12px; }
+    .chip {
+      flex:1;
+      min-height:58px;
+      border-radius:18px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.68);
+      display:grid;
+      place-items:center;
+      color: var(--ink);
+      font-weight:900;
+    }
+    .card {
+      position: relative;
+      margin: 12px 0;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 16px;
+      background: var(--panel);
+      box-shadow: 0 14px 35px rgba(82, 123, 190, .12);
+      overflow: hidden;
+    }
+    .card::after {
+      content:"";
+      position:absolute;
+      inset:auto -20% 0 -20%;
+      height:1px;
+      background: linear-gradient(90deg, transparent, rgba(91,140,255,.6), transparent);
+    }
+    .section { display:flex; justify-content:space-between; align-items:end; margin: 14px 0 8px; }
+    .section b { font: 900 22px/1 "Exo 2", sans-serif; }
+    .section span { color: var(--soft); font-size: 13px; }
+    .status {
+      display:flex;
+      gap:8px;
+      align-items:center;
+      color: var(--soft);
+      font-size:13px;
+    }
+    .dot { width:9px; height:9px; border-radius:50%; background:var(--cyan); box-shadow:0 0 12px rgba(53,214,184,.8); }
+    .video {
+      height: 190px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, #eaf3ff, #ffffff);
+      border:1px solid var(--line);
+      position:relative;
+      overflow:hidden;
+    }
+    .play {
+      position:absolute;
+      inset:0;
+      margin:auto;
+      width:64px;
+      height:64px;
+      border-radius:50%;
+      background:var(--blue);
+      clip-path: circle(50%);
+      box-shadow:0 0 0 18px rgba(91,140,255,.12);
+    }
+    .play::after {
+      content:"";
+      position:absolute;
+      left:25px; top:18px;
+      border-left:20px solid white;
+      border-top:14px solid transparent;
+      border-bottom:14px solid transparent;
+    }
+    .controls { display:flex; gap:8px; margin:10px 0; }
+    .pill {
+      flex:1;
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:10px 8px;
+      text-align:center;
+      background:rgba(255,255,255,.72);
+      font:800 12px/1 "Fira Code", monospace;
+    }
+    .cue {
+      display:grid;
+      grid-template-columns: 48px 1fr 38px;
+      gap:10px;
+      align-items:start;
+      padding:14px;
+      border-radius:22px;
+      border:1px solid rgba(91,140,255,.36);
+      background:linear-gradient(90deg, rgba(91,140,255,.13), rgba(53,214,184,.06));
+      animation: holo 3s ease-in-out infinite;
+    }
+    @keyframes holo {
+      0%,100% { box-shadow:0 0 0 rgba(91,140,255,0); }
+      45% { box-shadow:0 0 28px rgba(91,140,255,.18); }
+    }
+    .code { font:800 13px/1.2 "Fira Code", monospace; color:var(--blue); }
+    .en { font:900 22px/1.25 "Exo 2", sans-serif; }
+    .cn { margin-top:8px; color:var(--soft); line-height:1.5; letter-spacing:.08em; }
+    .rail { display:grid; gap:7px; }
+    .rail i {
+      width:32px; height:32px; border-radius:50%;
+      display:grid; place-items:center;
+      background:white; border:1px solid var(--line); color:var(--blue);
+      font-style:normal; font-size:12px; font-weight:900;
+    }
+    .task {
+      display:grid;
+      grid-template-columns: 42px 1fr auto;
+      gap:12px;
+      align-items:center;
+      padding:13px;
+      border-radius:20px;
+      background:rgba(255,255,255,.62);
+      border:1px solid rgba(188,212,255,.72);
+      margin-bottom:10px;
+    }
+    .orb {
+      width:42px;height:42px;border-radius:16px;
+      background:linear-gradient(135deg, rgba(91,140,255,.18), rgba(53,214,184,.16));
+      display:grid;place-items:center;color:var(--blue);font-weight:900;
+    }
+    .nav {
+      position:absolute;
+      left:18px; right:18px; bottom:18px;
+      height:62px;
+      border-radius:24px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.82);
+      display:flex;
+      justify-content:space-around;
+      align-items:center;
+      color:var(--soft);
+      font-size:12px;
+      font-weight:800;
+      box-shadow:0 10px 30px rgba(62,93,150,.12);
+    }
+    .active { color: var(--blue); }
+    @media (max-width: 980px) { .phones { grid-template-columns: 1fr; } .phone { max-width: 430px; margin: 0 auto; } }
+  </style>
+</head>
+<body>
+  <main class="stage">
+    <header class="header">
+      <div>
+        <div class="eyebrow">XINGYUE 2.16.0 / MOON HOLO CABIN</div>
+        <h1>原创二次元美少女 · 平台视频导入学习舱</h1>
+        <div class="brief">浅色月白全息 UI，不再依赖粗糙手绘 Canvas。角色资产是原创“星月学习搭档”，平台导入状态借鉴解析工具的反馈节奏：解析中、缩略图、平台标签、字幕/音频候选和失败原因。</div>
+      </div>
+      <div class="badge">NO DARK DEFAULT · ORIGINAL ASSET</div>
+    </header>
+
+    <section class="phones">
+      <article class="phone">
+        <div class="screen">
+          <div class="gridline"></div>
+          <div class="topline"><span class="time">09:41</span><span class="badge">READY</span></div>
+          <div class="title">晚上好</div>
+          <div class="subtitle">导入公开视频链接，生成双语时间线再开始听读。</div>
+          <div class="hero">
+            <div class="magic"></div>
+            <svg class="mascot" viewBox="0 0 190 214" aria-hidden="true">
+              <circle cx="132" cy="30" r="28" fill="#fff" opacity=".9"/>
+              <path d="M74 65c-10-26 8-48 36-50 30 0 51 24 45 57-24-14-54-16-81-7z" fill="#26314b"/>
+              <path d="M67 80c2-29 21-48 45-48s45 19 47 48c2 34-18 56-46 56S65 113 67 80z" fill="#ffd9c8"/>
+              <path d="M70 79C67 52 87 31 114 28c-18 22-26 45-27 72-9-3-14-10-17-21zM137 34c20 16 27 41 17 69-3-27-9-48-25-69z" fill="#26314b"/>
+              <circle cx="92" cy="82" r="3" fill="#1d2636"/><circle cx="130" cy="82" r="3" fill="#1d2636"/>
+              <path d="M103 106c8 6 17 6 25 0" stroke="#d78c8c" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <path d="M93 133h38l8 25H86z" fill="#f9d2b8"/>
+              <path d="M48 204c9-48 31-62 64-62 34 0 56 15 66 62H48z" fill="#5b8cff"/>
+              <path d="M76 148l36 31 36-31 12 14-48 44-48-44z" fill="#fff" opacity=".92"/>
+              <path d="M96 174l16 15 16-15 7 25-23 15-23-15z" fill="#35d6b8"/>
+            </svg>
+            <div class="import">
+              <div class="eyebrow">IMPORT GATE</div>
+              <div class="cta">导入视频链接</div>
+              <div class="row"><div class="chip">视频</div><div class="chip">字幕</div></div>
+            </div>
+          </div>
+          <div class="section"><b>解析状态</b><span>平台候选</span></div>
+          <div class="card"><div class="status"><i class="dot"></i> YouTube / Bilibili / Douyin · 字幕优先，无字幕转 ASR</div></div>
+          <div class="section"><b>继续学习</b><span>真实字幕数</span></div>
+          <div class="card"><div class="en">Public Video: Learning English</div><div class="subtitle">READY_TO_LEARN · 42 句双语字幕 · 04:39</div></div>
+          <div class="nav"><span class="active">首页</span><span>内容库</span><span>学习</span><span>生词</span><span>我的</span></div>
+        </div>
+      </article>
+
+      <article class="phone">
+        <div class="screen">
+          <div class="gridline"></div>
+          <div class="topline"><span class="time">09:42</span><span class="badge">PLAYER</span></div>
+          <div class="video"><div class="magic"></div><div class="play"></div></div>
+          <div class="controls"><div class="pill">1.00x</div><div class="pill">PLAY</div><div class="pill">AB</div></div>
+          <div class="section"><b>双语时间线</b><span>66 句</span></div>
+          <div class="cue">
+            <div class="code">00:00<br><span style="color:#9aa7ba">00:05</span></div>
+            <div>
+              <div class="en">What if I told you some people learn English in months</div>
+              <div class="cn">如果我告诉你，有些人几个月就能学会英语呢？</div>
+            </div>
+            <div class="rail"><i>↻</i><i>EN</i><i>CN</i><i>BI</i></div>
+          </div>
+          <div class="card"><div class="status"><i class="dot"></i> 点词弹窗后手动保存，已保存 token 持久高亮</div></div>
+          <div class="nav"><span>首页</span><span class="active">播放</span><span>学习</span><span>生词</span><span>我的</span></div>
+        </div>
+      </article>
+
+      <article class="phone">
+        <div class="screen">
+          <div class="gridline"></div>
+          <div class="topline"><span class="time">09:43</span><span class="badge">STUDY</span></div>
+          <div class="title">今日学习剧本</div>
+          <div class="subtitle">从复习压力开始，再进入核心词、短句输入、素材精听与泛听。</div>
+          <div class="card"><div class="status"><i class="dot"></i> IELTS 模式 · 主题词 + 搭配 + 听读素材</div></div>
+          <div class="task"><div class="orb">01</div><div><b>词汇热身</b><br><span class="subtitle">清到期复习和错词</span></div><b>5m</b></div>
+          <div class="task"><div class="orb">02</div><div><b>核心背词</b><br><span class="subtitle">10-25 个词 + 1 个短句块</span></div><b>12m</b></div>
+          <div class="task"><div class="orb">03</div><div><b>素材精听</b><br><span class="subtitle">打开最近 READY_TO_LEARN 的双语字幕</span></div><b>15m</b></div>
+          <div class="task"><div class="orb">04</div><div><b>跟读输出</b><br><span class="subtitle">3-5 句原声/TTS 跟读</span></div><b>8m</b></div>
+          <div class="task"><div class="orb">05</div><div><b>泛听巩固</b><br><span class="subtitle">5/15/30 分钟记录</span></div><b>+</b></div>
+          <div class="nav"><span>首页</span><span>内容库</span><span class="active">学习</span><span>生词</span><span>我的</span></div>
+        </div>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

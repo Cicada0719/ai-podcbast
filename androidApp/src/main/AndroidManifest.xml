@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="false"
+        android:extractNativeLibs="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="星月英语"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/XingYueTheme">
+        <activity
+            android:name="com.xingyue.english.android.XingYueEnglishActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/*" />
+                <data android:mimeType="application/pdf" />
+                <data android:mimeType="application/json" />
+                <data android:mimeType="application/octet-stream" />
+                <data android:mimeType="application/x-subrip" />
+                <data android:mimeType="audio/*" />
+                <data android:mimeType="video/*" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:mimeType="text/*" />
+                <data android:mimeType="application/pdf" />
+                <data android:mimeType="application/json" />
+                <data android:mimeType="application/octet-stream" />
+                <data android:mimeType="application/x-subrip" />
+                <data android:mimeType="audio/*" />
+                <data android:mimeType="video/*" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" />
+                <data android:scheme="http" />
+                <data android:scheme="https" android:host="youtube.com" />
+                <data android:scheme="https" android:host="www.youtube.com" />
+                <data android:scheme="https" android:host="m.youtube.com" />
+                <data android:scheme="https" android:host="youtu.be" />
+                <data android:scheme="https" android:host="bilibili.com" />
+                <data android:scheme="https" android:host="www.bilibili.com" />
+                <data android:scheme="https" android:host="m.bilibili.com" />
+                <data android:scheme="https" android:host="b23.tv" />
+                <data android:scheme="https" android:host="douyin.com" />
+                <data android:scheme="https" android:host="www.douyin.com" />
+                <data android:scheme="https" android:host="v.douyin.com" />
+                <data android:scheme="https" android:host="m.douyin.com" />
+                <data android:scheme="http" android:host="youtube.com" />
+                <data android:scheme="http" android:host="www.youtube.com" />
+                <data android:scheme="http" android:host="m.youtube.com" />
+                <data android:scheme="http" android:host="youtu.be" />
+                <data android:scheme="http" android:host="bilibili.com" />
+                <data android:scheme="http" android:host="www.bilibili.com" />
+                <data android:scheme="http" android:host="m.bilibili.com" />
+                <data android:scheme="http" android:host="b23.tv" />
+                <data android:scheme="http" android:host="douyin.com" />
+                <data android:scheme="http" android:host="www.douyin.com" />
+                <data android:scheme="http" android:host="v.douyin.com" />
+                <data android:scheme="http" android:host="m.douyin.com" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>

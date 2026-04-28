@@ -1,0 +1,76 @@
+{
+  "licenseNote": "示范数据用于 2.14.0 UI 与流程测试；完整 Core 3500/AWL/IELTS/TOEFL 词库需通过 GPL 兼容来源或用户私有 CSV/JSON 导入补充。",
+  "decks": [
+    {
+      "id": "core-3500",
+      "name": "Core 3500",
+      "stage": "CORE_3500",
+      "licenseSource": "示范数据；非官方 Oxford 词表"
+    },
+    {
+      "id": "ielts-topic-packs",
+      "name": "IELTS Topic Packs",
+      "stage": "IELTS_TOPICS",
+      "licenseSource": "示范数据；非 IELTS 官方题库"
+    },
+    {
+      "id": "toefl-academic-packs",
+      "name": "TOEFL Academic Packs",
+      "stage": "TOEFL_ACADEMIC",
+      "licenseSource": "示范数据；非 TOEFL 官方题库"
+    }
+  ],
+  "items": [
+    {
+      "word": "sustainable",
+      "phonetic": "",
+      "definition": "adj. 可持续的",
+      "cefr": "C1",
+      "deck": "advanced-2000",
+      "tags": "advanced|environment",
+      "phrases": "sustainable growth|sustainable policy",
+      "example": "Cities need sustainable transport systems.",
+      "licenseSource": "示范数据"
+    },
+    {
+      "word": "urbanization",
+      "phonetic": "",
+      "definition": "n. 城市化",
+      "cefr": "C1",
+      "deck": "ielts-topic-packs",
+      "tags": "ielts|city",
+      "phrases": "rapid urbanization|urbanization pressure",
+      "example": "Rapid urbanization can put pressure on housing.",
+      "licenseSource": "示范数据"
+    },
+    {
+      "word": "hypothesis",
+      "phonetic": "",
+      "definition": "n. 假说",
+      "cefr": "C1",
+      "deck": "toefl-academic-packs",
+      "tags": "toefl|science",
+      "phrases": "test a hypothesis|support a hypothesis",
+      "example": "The professor explains why the hypothesis was rejected.",
+      "licenseSource": "示范数据"
+    }
+  ],
+  "phrases": [
+    {
+      "english": "From my perspective, the main reason is...",
+      "chinese": "从我的角度看，主要原因是……",
+      "useCase": "IELTS_SPEAKING",
+      "deck": "ielts-topic-packs",
+      "keywords": ["perspective", "reason"],
+      "licenseSource": "示范数据"
+    },
+    {
+      "english": "The professor mainly discusses...",
+      "chinese": "教授主要讨论……",
+      "useCase": "TOEFL_LECTURE",
+      "deck": "toefl-academic-packs",
+      "keywords": ["professor", "discusses"],
+      "licenseSource": "示范数据"
+    }
+  ]
+}

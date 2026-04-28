@@ -1,0 +1,23 @@
+.gradle/
+build/
+**/build/
+out/
+*.iml
+.idea/
+.kotlin/
+
+local.properties
+*.jks
+*.keystore
+*.apk
+*.aab
+*.apks
+
+.DS_Store
+captures/
+delivery/
+test-output/
+
+# Upstream source snapshots are migration references only.
+# They contain large media files and third-party secrets in unrelated samples.
+third_party/upstream/

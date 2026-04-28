@@ -1,0 +1,86 @@
+[
+  {
+    "word": "wondering",
+    "phonetic": "/'wʌndərɪŋ/",
+    "definition": "想知道；感到疑惑",
+    "phrases": ["be wondering about sth. 想知道某事", "start wondering 开始疑惑"],
+    "examples": ["I was wondering if you could help me with this."]
+  },
+  {
+    "word": "actually",
+    "phonetic": "/'æktʃuəli/",
+    "definition": "实际上；事实上；竟然",
+    "phrases": ["actually happen 真实发生", "actually trying 其实想要"],
+    "examples": ["What are you actually trying to say?"]
+  },
+  {
+    "word": "interrupt",
+    "phonetic": "/ˌɪntə'rʌpt/",
+    "definition": "打断；中断；打扰",
+    "phrases": ["interrupt a conversation 打断谈话"],
+    "examples": ["Please do not interrupt the speaker."]
+  },
+  {
+    "word": "context",
+    "phonetic": "/'kɑːntekst/",
+    "definition": "语境；背景；上下文",
+    "phrases": ["in context 在语境中", "source context 来源语境"],
+    "examples": ["Words are easier to remember in context."]
+  },
+  {
+    "word": "practice",
+    "phonetic": "/'præktɪs/",
+    "definition": "练习；实践；惯例",
+    "phrases": ["listening practice 听力练习", "daily practice 每日练习"],
+    "examples": ["Short daily practice builds confidence."]
+  },
+  {
+    "word": "memory",
+    "phonetic": "/'meməri/",
+    "definition": "记忆；记忆力",
+    "phrases": ["long-term memory 长期记忆", "memory note 记忆笔记"],
+    "examples": ["Review strengthens long-term memory."]
+  },
+  {
+    "word": "subtitle",
+    "phonetic": "/'sʌbtaɪtl/",
+    "definition": "字幕；给...加字幕",
+    "phrases": ["bilingual subtitle 双语字幕", "subtitle timeline 字幕时间线"],
+    "examples": ["Tap a word in the subtitle to save it."]
+  },
+  {
+    "word": "listening",
+    "phonetic": "/'lɪsənɪŋ/",
+    "definition": "听力；倾听",
+    "phrases": ["listening repeat 听力跟读", "extensive listening 泛听"],
+    "examples": ["Listening practice helps you notice real expressions."]
+  },
+  {
+    "word": "repeat",
+    "phonetic": "/rɪ'piːt/",
+    "definition": "重复；复述；重播",
+    "phrases": ["repeat after me 跟我读", "single sentence repeat 单句循环"],
+    "examples": ["Repeat the sentence until it feels natural."]
+  },
+  {
+    "word": "durable",
+    "phonetic": "/'dʊrəbəl/",
+    "definition": "持久的；耐用的",
+    "phrases": ["durable memory 持久记忆"],
+    "examples": ["Spaced review creates durable memory."]
+  },
+  {
+    "word": "curiosity",
+    "phonetic": "/ˌkjʊri'ɑːsəti/",
+    "definition": "好奇心；求知欲",
+    "phrases": ["spark curiosity 激发好奇心"],
+    "examples": ["Curiosity makes learning sustainable."]
+  },
+  {
+    "word": "reflection",
+    "phonetic": "/rɪ'flekʃən/",
+    "definition": "反思；映像；思考",
+    "phrases": ["daily reflection 每日复盘"],
+    "examples": ["Reflection helps you avoid the same mistake."]
+  }
+]
